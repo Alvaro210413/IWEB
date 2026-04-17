@@ -1,0 +1,59 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Producto> listaProductos = new ArrayList<>();
+
+        String opcion = "";
+
+        System.out.println("----BIENVENIDO A TECHSTORE----");
+        
+        // Si es la opcion salir, acaba la iterativa
+        while(!opcion.equalsIgnoreCase("salir")){
+            System.out.println("\n¿Que desea hacer? (agregar / ver / salir)");
+            //opcion agregada por el usuario
+            opcion = sc.nextLine();
+
+            if(opcion.equalsIgnoreCase("agregar")){
+
+                System.out.println("Ingrese nombre del producto: ");
+                String nombre = sc.nextLine();
+
+                // Validación de PRECIO con un mini-while interno
+                double precio = -1;
+                while(precio<0){
+                    System.out.println("Ingrese precio (debe ser mayor a 0): ");
+                    precio = Double.parseDouble(sc.nextLine());
+                }
+
+                System.out.print("Cantidad en stock: ");
+                int stock = Integer.parseInt(sc.nextLine());
+
+                // Creamos el objeto y lo metemos al ArrayList
+                Producto nuevo = new Producto(nombre, precio, stock);
+                listaProductos.add(nuevo);
+                System.out.println("¡Producto registrado!");
+
+            }else if (opcion.equalsIgnoreCase("ver")) {
+
+                if (listaProductos.isEmpty()) {
+                    System.out.println("No hay productos registrados.");
+                } else {
+                    System.out.println("--- LISTA DE INVENTARIO ---");
+                    // Usamos el for-each para mostrar all
+                    for (Producto p : listaProductos) {
+                        p.imprimirDetalle();
+                    }
+                }
+            } else if (!opcion.equalsIgnoreCase("salir")) {
+                System.out.println("Opción no válida, intenta de nuevo.");
+            }
+
+        }
+        //EL CIERRE VA FUERA DEL WHILE
+        System.out.println("Programa terminado. ¡Gracias!");
+        sc.close();
+    }
+}
