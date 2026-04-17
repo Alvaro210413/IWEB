@@ -37,6 +37,5 @@ public class Main {
         int total = miClub.calcularTotalAsistentes();
         System.out.println("\nTotal acumulado de asistentes entre todos los eventos: " + total);
 
-
     }
 }
