@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+
+public class Club {
+
+    private String nombre;
+    private int cantMiembros;
+    private String tipo;
+    // Como se tiene la clase Presidente y solo se va a utilizar
+    // para usarlo como una ubicación, se pone private Presidente presidente
+    private Presidente presidente;
+    // Se crea la lista de eventos proveniente de la clase Evento
+    // para usarla en la clase Club
+    private ArrayList<Evento> listaEventos;
+
+    //Predeterminado Constructor
+    public Club(ArrayList<Evento> listaEventos, Presidente presidente, String tipo, int cantMiembros, String nombre) {
+        // Manera de inicializar la lista en 0, en vez de la predeterminada
+        this.listaEventos = new ArrayList<>();
+        this.presidente = presidente;
+        this.tipo = tipo;
+        this.cantMiembros = cantMiembros;
+        this.nombre = nombre;
+    }
+    //--------------------------------------------------------------------------
+    // Parametro evento ingresado por el usuario, el usuario va a ingresar eventos(parametros)
+    // en el main para que luego se use esta función para agrupar los eventos ingresados
+    // por este usuario.
+    public void agregarEvento(Evento evento){
+        this.listaEventos.add(evento);
+    }
+    //--------------------------------------------------------------------------
+    // No requiere de parametros externos, sino solo se usan atributos de la clase:
+    public void mostrarReporte(){
+        System.out.println("Club: "+nombre+" ["+tipo+"]");
+        System.out.println("Presidente: "+ presidente.getNombre());
+        System.out.println("Total de eventos: "+listaEventos.size());
+    }
+    //--------------------------------------------------------------------------
+    public int calcularTotalAsistentes(){
+        int total=0;
+        for(Evento e : listaEventos){
+            total += e.getAsistentes();
+        }
+        return total;
+    }
+    //--------------------------------------------------------------------------
+
+    //Predeterminado getter and setter
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getCantMiembros() {
+        return cantMiembros;
+    }
+
+    public void setCantMiembros(int cantMiembros) {
+        this.cantMiembros = cantMiembros;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Presidente getPresidente() {
+        return presidente;
+    }
+
+    public void setPresidente(Presidente presidente) {
+        this.presidente = presidente;
+    }
+
+    public ArrayList<Evento> getListaEventos() {
+        return listaEventos;
+    }
+
+    public void setListaEventos(ArrayList<Evento> listaEventos) {
+        this.listaEventos = listaEventos;
+    }
+
+}
