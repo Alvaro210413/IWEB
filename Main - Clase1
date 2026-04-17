@@ -1,0 +1,42 @@
+public class Main {
+    public static void main(String[] args) {
+
+        //Se usa la clase Presidente para designar un objeto llamado presi
+        //Mayormente se usa Clase nameClase = new Clase("Los atribustos asignados","...","...")
+        Presidente presi = new Presidente("Alvaro Pimentel", "20232283");
+
+        // Se crea el objeto llamado miClub, en los atributos(parametros) se coloca
+        // null en el primero debido a que la lista que se uso se inicializo en 0
+        Club miClub = new Club(null,presi,"Académico",15,"Club Bati");
+
+        // En el ejercicio pedia crear 2 objetos de Evento
+        Evento evento1 = new Evento("Taller de Java","15/04/2026",45);
+        Evento evento2 = new Evento("Concurso Nacional","25/05/2026",120);
+
+        miClub.agregarEvento(evento1);
+        miClub.agregarEvento(evento2);
+
+        System.out.println("------ INICIO DEL SISTEMA ------");
+
+        presi.presentarse();
+        if(presi.tieneCodigoLargo()){
+            System.out.println("\nEl código es valido para la PUCP.");
+        }
+
+        System.out.println("\n------ REPORTE DEL CLUB ------");
+        miClub.mostrarReporte();
+
+        System.out.println("\n------ DETALLES DE EVENTOS ------");
+        for(Evento e : miClub.getListaEventos()){
+            e.mostrarResumen();
+            if(e.esMasivo()){
+                System.out.println("[Aviso: este evento es masivo]");
+            }
+        }
+
+        int total = miClub.calcularTotalAsistentes();
+        System.out.println("\nTotal acumulado de asistentes entre todos los eventos: " + total);
+
+
+    }
+}
