@@ -29,6 +29,4 @@ public class Presidente {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
-
 }
