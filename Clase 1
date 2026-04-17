@@ -1,0 +1,53 @@
+
+TEORÍA CLASE 1:
+
+Conceptos Fundamentales de Programación Orientada a Objetos:
+
+Clase: Es una plantilla, molde o prototipo que define los atributos (características) y métodos (acciones) de un objeto. 
+Es una representación abstracta de un grupo de elementos con características comunes.
+
+Objeto: Es una instancia de una clase. Por ejemplo, si "Estudiante" es la clase, "Carla" o "David" con sus datos específicos 
+son los objetos.
+
+Atributos: Definen las características de la clase (como nombre, código, etc.). En Java, deben empezar con minúscula.
+
+Métodos: Son fragmentos de código que realizan procesos y pueden o no retornar un valor. Si no devuelven nada, se usa la palabra
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Modelado con UML (Unified Modeling Language):
+
+Se utiliza para representar una clase de forma estándar.
+
+Diagrama de Clases: Es un gráfico que muestra el nombre de la clase, sus atributos (características) y sus métodos (acciones).
+
+Ejemplo del PDF: Para el laboratorio, deberás identificar clases como Club, Presidente y Evento con sus respectivos datos.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Implementación en Java:
+
+Estructura de una Clase: Todo el código debe estar dentro de las llaves { } de la clase.
+Método main: Es el punto de inicio de ejecución de cualquier aplicación Java.
+Instanciación: Para crear un objeto se usa el formato: Clase objeto = new Clase();.
+Palabra reservada this: Se usa para referirse a la instancia actual del objeto, especialmente útil para diferenciar un atributo 
+de un parámetro que tengan el mismo nombre.
+Encapsulamiento (Requisito del examen): El PDF pide que todos los atributos sean privados. Esto significa que solo se pueden 
+acceder a ellos a través de métodos públicos como constructores y getters.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Manejo de Colecciones y Paquetes:
+
+ArrayList: 
+Es una clase (ubicada en java.util) que permite manejar listas de objetos. El examen requiere que el Club 
+tenga una lista de Eventos usando ArrayList.
+
+Import: 
+Se usa la palabra import para traer clases de otros paquetes, como import java.util.ArrayList;.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+Contexto de Agilidad (Scrum):
+
+Aunque el examen se centra en la codificación, tu PPT de agilidad menciona conceptos que ayudan a entender cómo se 
+organiza el trabajo:
+
+Historias de Usuario (HU): Definen funcionalidades desde la perspectiva del usuario.
+Product Backlog: Es la lista priorizada de tareas o funcionalidades que el equipo debe desarrollar.
