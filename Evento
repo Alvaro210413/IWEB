@@ -1,0 +1,51 @@
+public class Evento {
+
+    private String nombre;
+    private String fecha;
+    private int asistentes;
+
+    public Evento(String nombre, String fecha, int asistentes) {
+        this.nombre = nombre;
+        this.fecha = fecha;
+        this.asistentes = asistentes;
+    }
+
+    public void setAsistentes(int asistentes) {
+
+        if(asistentes >= 0){
+            this.asistentes = asistentes;
+        }else {
+            System.out.println("Error: La cantidad de asistentes no puede ser negativa.");
+        }
+
+    }
+
+    public void mostrarResumen(){
+        System.out.println("Evento: "+nombre+"| Fecha: "+fecha);
+
+    }
+
+    public boolean esMasivo(){
+        return asistentes>50;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getAsistentes() {
+        return asistentes;
+    }
+}
