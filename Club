@@ -85,5 +85,4 @@ public class Club {
     public void setListaEventos(ArrayList<Evento> listaEventos) {
         this.listaEventos = listaEventos;
     }
-
 }
