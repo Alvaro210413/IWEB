@@ -1,0 +1,53 @@
+Modificadores de Acceso (La seguridad de tus clases):
+
+Ya vimos que usas private, pero es importante entender por qué y qué otras opciones existen según tus diapositivas:
+
+private: Solo la misma clase puede verlo. Es el estándar para atributos (Encapsulamiento).
+
+public: Cualquier clase en cualquier paquete puede acceder. Se usa para los métodos (getters/setters).
+
+protected: Solo clases del mismo paquete o que hereden de ella pueden acceder.
+
+default: Si no pones nada, solo las clases del mismo paquete tienen acceso.
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+2. Clase Scanner (Ingreso de datos por consola)
+Esta es la herramienta que permite que tu programa sea interactivo. Para usarla necesitas:
+
+Importar: import java.util.Scanner;
+
+Instanciar: Scanner sc = new Scanner(System.in);
+
+Capturar:
+sc.nextLine(): Para textos (String).
+sc.nextInt(): Para números enteros.
+sc.nextDouble(): Para decimales.
+Cerrar: sc.close(); (Es una buena práctica que mencionan tus diapos).
+
+3. Instrucciones Condicionales (Toma de decisiones)
+Sirven para que tu programa haga una cosa u otra dependiendo de la situación:
+
+if / else: Evalúa una condición booleana.
+   Tip de tus diapos: Para comparar Strings (cadenas), no uses ==, usa siempre .equals(). Ejemplo: if(tipo.equals("Deportivo")).
+
+Operador Ternario: Es un "if" resumido en una sola línea.
+
+variable = (condición) ? valorSiVerdadero : valorSiFalso;
+
+switch: Ideal cuando tienes muchas opciones fijas (por ejemplo, elegir el tipo de club: 1. Deportivo, 2. Cultural, 3. Académico).
+
+4. Instrucciones Iterativas (Bucles/Loops)
+Sirven para repetir acciones o recorrer listas:
+
+for tradicional: Se usa cuando sabes exactamente cuántas veces repetir algo (usa un contador i).
+
+for-each: (El que usamos antes con la e). Es el mejor para recorrer el ArrayList de eventos.
+
+while: Se repite mientras una condición sea verdadera. Útil si quieres que el programa no termine hasta que el usuario elija "Salir".
+
+do-while: Similar al while, pero garantiza que el código se ejecute al menos una vez antes de preguntar la condición.
+
+5. Depuración (Debug)
+Tus diapositivas mencionan algo vital para el examen: el Breakpoint.
+
+Si tu código falla y no sabes dónde, haces clic en el número de línea (punto rojo) y corres el programa en modo "Debug". Esto te permite ver el valor de tus variables paso a paso.
