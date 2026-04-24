@@ -1,0 +1,45 @@
+Clase 4.1: Arreglos y Listas
+
+Este PPT se enfoca en las estructuras de datos fundamentales en Java para almacenar colecciones de elementos.Arreglos (Arrays):
+Son contenedores de tamaño fijo que guardan elementos del mismo tipo.
+Se accede a cada elemento mediante un índice numérico (empezando desde 0).
+Para conocer su tamaño se usa el atributo .length.Pueden ser de tipos primitivos o de objetos.
+
+Importante: Intentar acceder a un índice fuera del rango lanza una ArrayIndexOutOfBoundsException.
+
+Java Collection Framework:
+
+ArrayList: A diferencia de los arreglos, tienen tamaño dinámico (pueden crecer o disminuir). 
+Permiten operaciones como .add(), .get(), .remove() y .size().
+
+HashMap: Almacena información en parejas de clave-valor (key-value). 
+Es ideal para búsquedas rápidas mediante una clave única.
+
+HashSet: Colección que no permite elementos repetidos. Se usa principalmente para filtrar valores únicos y realizar búsquedas rápidas.
+
+Bucle For-each: Es una forma más legible de recorrer arreglos y colecciones sin necesidad de gestionar índices.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Clase 4.2: Herencia y Polimorfismo
+
+Este PPT profundiza en conceptos clave de la Programación Orientada a Objetos (POO).
+
+Herencia:Permite crear clases nuevas (hijas) a partir de clases existentes (padres), heredando sus atributos y métodos.
+Se utiliza la palabra reservada extends.
+
+Clase Object: Es la "madre" de todas las clases en Java; todas heredan de ella implícitamente.
+
+Palabra super: Se usa para invocar constructores o métodos de la clase padre.
+
+Sobreescritura: Una clase hija puede volver a implementar un método de su clase padre para especializar su comportamiento.
+
+Polimorfismo:Es la capacidad de una variable de referencia de invocar métodos dependiendo del tipo de objeto al que apunta en tiempo de ejecución.
+Permite que objetos de clases hijas sean referenciados como si fueran de la clase padre.
+
+Herramientas adicionales:
+instanceof: Sirve para comprobar si un objeto pertenece a una clase específica.
+
+Typecasting: Permite convertir una referencia de una clase base a una clase derivada (siempre que el objeto sea realmente de ese tipo).
+
+Modificador final: Si se aplica a una clase, no puede ser heredada; si se aplica a un método, no puede ser sobreescrito
