@@ -1,0 +1,16 @@
+1. Jerarquía de Objetos (Items)
+
+Clase Padre: Objeto. 
+Es la base para los ítems que el superviviente puede encontrar.
+
+Clases Hijas:
+Arma: Especialización para objetos de ataque.
+Objeto curativo: Especialización para objetos que restauran vida.
+
+2. Jerarquía de Entes (Personajes)
+
+Clase Padre: Ente. Es la base para cualquier ser vivo (o no vivo) en el juego.
+
+Clases Hijas:Superviviente: Posee atributos como valentía, sanidad y un inventario de objetos.
+
+Zombie: Entidad enemiga con fuerza, defensa y frases características de "Rawr".
