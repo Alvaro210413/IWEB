@@ -1,0 +1,142 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Objeto> listaObjetosGlobal = new ArrayList<>();
+        ArrayList<Superviviente> listaSupers = new ArrayList<>();
+        ArrayList<Zombie> listaZombies = new ArrayList<>();
+
+        int opcion = 0;
+        while (opcion != 5) {
+            System.out.println("\n=== MENU ZOMBIE GAME ===");
+            System.out.println("1. Registrar Objeto (Mision 2)");
+            System.out.println("2. Registrar Superviviente (Mision 3)");
+            System.out.println("3. Registrar Zombie (Mision 4)");
+            System.out.println("4. Jugar (Mision 5 y 6)");
+            System.out.println("5. Salir");
+            System.out.print("Seleccion: ");
+            opcion = sc.nextInt();
+            sc.nextLine(); // Limpiar el buffer
+
+            switch (opcion) {
+                case 1: // --- MISION 2: AGREGAR OBJETOS ---
+                    System.out.print("Nombre: "); String nO = sc.nextLine();
+                    System.out.print("Uso: "); String uO = sc.nextLine();
+                    System.out.print("Tipo (1.Arma / 2.Curativo): "); int tipo = sc.nextInt();
+                    if(tipo == 1) {
+                        System.out.print("Poder (0-1000): "); int p = sc.nextInt();
+                        if(p > 1000) p = 1000;
+                        listaObjetosGlobal.add(new Arma(nO, uO, p));
+                    } else {
+                        System.out.print("PS que restaura: "); int ps = sc.nextInt();
+                        listaObjetosGlobal.add(new ObjetoCurativo(nO, uO, ps));
+                    }
+                    System.out.println("Objeto guardado con exito.");
+                    break;
+
+                case 2: // --- MISION 3: SUPERVIVIENTE + OBJETOS AL AZAR ---
+                    if(listaObjetosGlobal.isEmpty()) {
+                        System.out.println("¡Error! Primero debes crear objetos en la opcion 1.");
+                        break;
+                    }
+                    System.out.print("Nombre: "); String ns = sc.nextLine();
+                    System.out.print("Fuerza: "); int f = sc.nextInt();
+                    System.out.print("Defenza: "); int d = sc.nextInt();
+                    System.out.print("Velocidad: "); int v = sc.nextInt();
+                    System.out.print("Vida: "); double vid = sc.nextDouble(); sc.nextLine();
+                    System.out.print("Frase: "); String fr = sc.nextLine();
+                    System.out.print("Valentia: "); int val = sc.nextInt();
+
+                    Superviviente supervivienteNuevo = new Superviviente(ns, f, d, v, vid, fr, val);
+
+                    System.out.print("¿Cuantos objetos darle al azar?: ");
+                    int n = sc.nextInt();
+                    for(int i = 0; i < n; i++) {
+                        int index = (int)(Math.random() * listaObjetosGlobal.size());
+                        supervivienteNuevo.getInventario().add(listaObjetosGlobal.get(index));
+                    }
+                    listaSupers.add(supervivienteNuevo);
+                    System.out.println("Superviviente registrado.");
+                    break;
+
+                case 3: // --- MISION 4: AGREGAR ZOMBIE ---
+                    System.out.print("Nombre Zombie: "); String nz = sc.nextLine();
+                    System.out.print("Fuerza: "); int fz = sc.nextInt();
+                    System.out.print("Defenza: "); int dz = sc.nextInt();
+                    System.out.print("Velocidad: "); int vz = sc.nextInt();
+                    System.out.print("Vida: "); double vidz = sc.nextDouble(); sc.nextLine();
+                    System.out.print("Frase (Hola/Victoria/Todo bien): "); String frz = sc.nextLine();
+
+                    listaZombies.add(new Zombie(nz, fz, dz, vz, vidz, frz));
+                    System.out.println("Zombie registrado.");
+                    break;
+
+                case 4: // --- MISION 5 Y 6: PELEA ESTILO IMAGEN ---
+                    if(listaSupers.isEmpty() || listaZombies.isEmpty()) {
+                        System.out.println("Faltan combatientes para iniciar.");
+                        break;
+                    }
+                    System.out.println("Juego iniciado");
+
+                    while(!listaSupers.isEmpty() && !listaZombies.isEmpty()) {
+                        Superviviente sup = listaSupers.get(0);
+                        Zombie zom = listaZombies.get(0);
+
+                        System.out.println(sup.getNombre() + " ha decidido pelear");
+                        System.out.println("Se realizara el combate contra el zombie " + zom.getNombre());
+
+                        // Ataque del Humano
+                        for(Objeto obj : sup.getInventario()) {
+                            if(obj instanceof Arma) {
+                                Arma armaEq = (Arma) obj;
+                                System.out.println(sup.getNombre() + " usa una " + armaEq.getNombre());
+                                zom.setVida(zom.getVida() - armaEq.getPoder());
+                            }
+                            if(zom.getVida() <= 0) break;
+                        }
+
+                        // Respuesta del Zombie
+                        if(zom.getVida() > 0) {
+                            if (sup.estaTraumado()) {
+                                System.out.println(sup.getNombre() + ": Ha quedado traumado");
+                            }
+                            System.out.println(zom.getNombre() + ": " + zom.getFraseVictoria());
+
+                            double daño = zom.fuerza - sup.defenza;
+                            sup.setVida(sup.getVida() - (daño < 0 ? 0 : daño));
+                        }
+
+                        // Verificacion de muertes
+                        if(sup.getVida() <= 0) {
+                            System.out.println("Superviviente " + sup.getNombre() + " ha muerto, habiendo aniquiliado " + sup.getKills() + " zombies");
+                            if(zom.getVida() > 0) {
+                                System.out.println("Zombie " + zom.getNombre() + " aun le queda " + zom.getVida() + " puntos de vida");
+                            }
+                            listaSupers.remove(0);
+                        }
+
+                        if(zom.getVida() <= 0) {
+                            System.out.println("El zombie " + zom.getNombre() + " ha muerto!");
+                            sup.setKills(sup.getKills() + 1);
+                            listaZombies.remove(0);
+                        }
+                    }
+
+                    if (listaSupers.isEmpty()) {
+                        System.out.println("No queda ningun superviviente vivo. Los zombies arrasaron con el mundo. GAME OVER.");
+                    } else {
+                        System.out.println("¡Los supervivientes han salvado el mundo!");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Saliendo del juego...");
+                    break;
+                default:
+                    System.out.println("Opcion no valida.");
+            }
+        }
+    }
+}
