@@ -1,0 +1,59 @@
+public class Ente {
+
+    protected String nombre;
+    protected int fuerza;
+    protected int defenza;
+    protected int velocidad;
+    protected double vida;
+    protected String fraseVictoria;
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getFuerza() {
+        return fuerza;
+    }
+
+    public void setFuerza(int fuerza) {
+        this.fuerza = fuerza;
+    }
+
+    public int getDefenza() {
+        return defenza;
+    }
+
+    public void setDefenza(int defenza) {
+        this.defenza = defenza;
+    }
+
+    public int getVelocidad() {
+        return velocidad;
+    }
+
+    public void setVelocidad(int velocidad) {
+        this.velocidad = velocidad;
+    }
+
+    public double getVida() {
+        return vida;
+    }
+
+    public void setVida(double vida) {
+        this.vida = vida;
+    }
+
+    public String getFraseVictoria() {
+        return fraseVictoria;
+    }
+
+    public void setFraseVictoria(String fraseVictoria) {
+        this.fraseVictoria = fraseVictoria;
+    }
+
+}
