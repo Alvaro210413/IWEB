@@ -1,0 +1,17 @@
+public class Arma extends Objeto{
+    // Correcto: Siempre en el "top" de la definición
+    public int getPoder() {
+        return poder;
+    }
+
+    public void setPoder(int poder) {
+        this.poder = poder;
+    }
+
+    public Arma(String nombre,String uso,int poder) {
+        super(nombre,uso); // REGLA: Debe ser la PRIMERA línea.
+        this.poder = poder;
+    }
+
+    private int poder;
+}
