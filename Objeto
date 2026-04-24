@@ -1,0 +1,27 @@
+public class Objeto {
+
+    private String nombre;
+    private String uso;
+
+    public Objeto(String nombre, String uso) {
+        this.nombre = nombre;
+        this.uso = uso;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getUso() {
+        return uso;
+    }
+
+    public void setUso(String uso) {
+        this.uso = uso;
+    }
+
+}
