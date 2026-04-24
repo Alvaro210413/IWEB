@@ -1,0 +1,24 @@
+public class Zombie extends Ente{
+
+    public Zombie(String nombre, int fuerza, int defenza, int velocidad, double vida, String fraseVictoria) {
+        this.nombre = nombre;
+        this.fuerza = fuerza;
+        this.defenza = defenza;
+        this.velocidad = velocidad;
+        this.vida = vida;
+
+        if (fraseVictoria.equalsIgnoreCase("Hola")) {
+            this.fraseVictoria = "RawR";
+        } else if (fraseVictoria.equalsIgnoreCase("Victoria")) {
+            this.fraseVictoria = "RawRawRa";
+        } else if (fraseVictoria.equalsIgnoreCase("Todo bien")) {
+            this.fraseVictoria = "RawRawRaw";
+        } else{
+            this.fraseVictoria = "Rawr?"; // Una opción por defecto si no es ninguna de las anteriores
+        }
+    }
+
+    public void hablar(){
+        System.out.println(this.nombre+" dice: "+this.fraseVictoria);
+    }
+}
