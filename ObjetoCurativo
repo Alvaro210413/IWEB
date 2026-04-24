@@ -1,0 +1,18 @@
+public class ObjetoCurativo extends Objeto {
+
+    public int getPuntosSaludRestaura() {
+        return puntosSaludRestaura;
+    }
+
+    public void setPuntosSaludRestaura(int puntosSaludRestaura) {
+        this.puntosSaludRestaura = puntosSaludRestaura;
+    }
+
+    public ObjetoCurativo(String nombre, String uso, int puntosSaludRestaura) {
+        super(nombre, uso);
+        this.puntosSaludRestaura = puntosSaludRestaura;
+    }
+
+    private int puntosSaludRestaura;
+
+}
