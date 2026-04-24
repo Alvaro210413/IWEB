@@ -1,0 +1,67 @@
+import java.util.ArrayList;
+
+public class Superviviente extends Ente{
+
+    private int valentia;
+    private int sanidad;
+    private ArrayList<Objeto> inventario;
+    private int kills;
+
+    // Como Ente no tiene constructor, aquí inicializamos td directo
+    public Superviviente(String nombre, int fuerza, int defenza, int velocidad, double vida, String fraseVictoria,int valentia) {
+
+        this.nombre = nombre;
+        this.fuerza = fuerza;
+        this.defenza = defenza;
+        this.velocidad = velocidad;
+        this.vida = vida;
+        this.fraseVictoria = fraseVictoria;
+
+        // Atributos propios
+        this.valentia = valentia;
+        this.inventario = new ArrayList<>();
+        this.kills = 0;
+
+        // Cálculo automático de sanidad según el PDF
+        this.sanidad = 255 - fuerza - defenza;
+
+    }
+
+    // Métod para saber si está traumado
+    public boolean estaTraumado() {
+        return this.sanidad < 0;
+    }
+
+
+    public int getValentia() {
+        return valentia;
+    }
+
+    public void setValentia(int valentia) {
+        this.valentia = valentia;
+    }
+
+    public int getSanidad() {
+        return sanidad;
+    }
+
+    public void setSanidad(int sanidad) {
+        this.sanidad = sanidad;
+    }
+
+    public ArrayList<Objeto> getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(ArrayList<Objeto> inventario) {
+        this.inventario = inventario;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+}
