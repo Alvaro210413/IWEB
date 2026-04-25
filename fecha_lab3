@@ -1,0 +1,46 @@
+1. Usando LocalDate (La forma recomendada)
+La clase LocalDate es inmutable. Esto significa que cuando "sumas" un día, no modificas el objeto original, 
+sino que creas uno nuevo. En un bucle, simplemente reasignas la variable.
+
+Ejemplo: Sumar días en un bucle for
+
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        LocalDate fecha = LocalDate.now(); // Fecha actual
+
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Iteración " + i + ": " + fecha);
+            
+            // Actualizamos la fecha sumando 1 día
+            fecha = fecha.plusDays(1); 
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------------------------------
+
+2. Métodos útiles de actualización
+
+Dependiendo de qué necesites "actualizar" en cada vuelta del bucle, puedes usar diferentes métodos:
+Necesidad                  Método      
+Sumar días                 fecha.plusDays(n)
+Sumar semanas              fecha.plusWeeks(n)
+Sumar meses                fecha.plusMonths(n)
+Retroceder tiempo          fecha.minusDays(n)
+Ir a un día específico     fecha.withDayOfMonth(1) (ej. ir al inicio de mes)
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3. ¿Y si necesito horas y minutos?
+Si tu iteración requiere precisión de tiempo (por ejemplo, un log que ocurre cada 15 minutos), utiliza LocalDateTime.
+
+import java.time.LocalDateTime;
+
+LocalDateTime horario = LocalDateTime.now();
+
+for (int i = 0; i < 3; i++) {
+    System.out.println("Reporte a las: " + horario);
+    horario = horario.plusMinutes(15); // Suma 15 minutos en cada vuelta
+}
