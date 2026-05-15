@@ -1,0 +1,95 @@
+USE biblioteca_db; 
+
+SELECT * FROM libros 
+WHERE precio_alquiler = (SELECT MAX(precio_alquiler) FROM libros);
+--------------------------------------------------------------------------------------------------------------------
+import java.sql.*; 
+
+public class PruebaConexion {
+    public static void main(String[] args) {
+        
+        String url = "jdbc:mysql://localhost:3306/biblioteca_db";
+        String user = "root";
+        String pass = "12345678"; 
+
+        try {
+            Connection con = DriverManager.getConnection(url, user, pass);
+
+            // Definir la Subconsulta
+            // Se busca el libro más caro
+            String sql = "SELECT * FROM libros WHERE precio_alquiler = (SELECT MAX(precio_alquiler) FROM libros)";
+
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            // rs.getDouble()
+            // rs.getInt()
+
+            while (rs.next()) {
+                System.out.println("El libro más caro es: " + rs.getString("titulo"));
+            }
+            // se puede optar por la opción de:
+            while (rs.next()) {
+                String nombreAlumno = rs.getString("titulo"); 
+                System.out.println("El libro más caro es: " + nombreAlumno);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+-------------------------------------------------------------------------------------------------------------
+// En pomp.xml
+<dependencies>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+    </dependencies>
+
+</project>
+
+--------------------------------------------------------------------------------------------------------------
+// Consulta 1
+String sqlLibros = "SELECT * FROM libros";
+PreparedStatement pstmt1 = con.prepareStatement(sqlLibros);
+ResultSet rs1 = pstmt1.executeQuery();
+
+// Consulta 2
+String sqlAutores = "SELECT * FROM autores";
+PreparedStatement pstmt2 = con.prepareStatement(sqlAutores);
+ResultSet rs2 = pstmt2.executeQuery();
+
+----------------------------------------------------------------------------------------------------------------
+
+El más caro: WHERE precio = (SELECT MAX(precio) FROM...)
+El más barato: WHERE precio = (SELECT MIN(precio) FROM...)
+Encima del promedio: WHERE sueldo > (SELECT AVG(sueldo) FROM...)
+El más antiguo: WHERE fecha_ingreso = (SELECT MIN(fecha_ingreso) FROM...)
+El último en registrarse: WHERE id = (SELECT MAX(id) FROM...)
+
+operador IN o NOT IN.
+
+Usuarios que sí compraron: WHERE id_usuario IN (SELECT id_usuario FROM ventas)
+Usuarios que nunca compraron: WHERE id_usuario NOT IN (SELECT id_usuario FROM ventas)
+Libros de autores específicos: WHERE id_autor IN (SELECT id_autor FROM autores WHERE nacionalidad = 'Peruano')
+Productos sin stock: WHERE id_producto IN (SELECT id_producto FROM inventario WHERE cantidad = 0)
+Alumnos no inscritos en una clase: WHERE id_alumno NOT IN (SELECT id_alumno FROM inscripciones WHERE id_clase = 5)
+
+Textos (Nombres, DNI, Categoría): rs.getString("nombre_columna")
+Precios o decimales: rs.getDouble("precio") o rs.getBigDecimal("monto")
+Cantidades o IDs: rs.getInt("stock")
+Fechas: rs.getDate("fecha_registro")
+Verdadero/Falso (Booleanos): rs.getBoolean("esta_activo")
+
+Casos con PreparedStatements:
+Cosas que te piden filtrar usando el signo ?
+
+Búsqueda por nombre exacto: WHERE nombre = ? -> pstmt.setString(1, "Juan")
+Búsqueda por rango de precio: WHERE precio BETWEEN ? AND ? -> pstmt.setDouble(1, 10.0); pstmt.setDouble(2, 50.0);
+Búsqueda con LIKE: WHERE nombre LIKE ? -> pstmt.setString(1, "A%") (Importante: el % se pone en el Java, no en el SQL).
+Filtro por categoría y estado: WHERE cat = ? AND estado = ? -> Usas setString y setInt.
