@@ -1,0 +1,80 @@
+Maven Archetype
+Archtype: ...webapp
+Click derecho al nombre del proyecto -> New -> Directory  "src/main/java"
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+lo mismo en java -> New -> Package -> poner nombre "beans"
+Luego en beans, se crea la clase a trabajar, como "Employee"
+
+import java.math.BigDecimal;    -> Clase de Java para guardar dinero y sueldos con precisión matemática exacta, evitando errores de redondeo.
+import java.time.LocalDateTime;    -> Clase moderna de Java para guardar fechas y horas exactas sin problemas de zonas horarias.
+
+Colocar:
+private "tipoVariable" "nombre";     y    Getters y Setters con Generate    (se trabaja con la tabla principal)   
+
+fullNameEmployee
+
+¿Qué es un Bean?: Es una clase contenedora que sirve para empaquetar y transportar datos relacionados como si 
+                  fueran un solo objeto.
+
+¿Por qué crear más de uno?: Porque la tabla de empleados depende de la tabla de puestos (jobs). Para poder listar 
+                            los puestos en los formularios de creación y edición, necesitas el Bean Job.java además 
+                            del Bean Employee.java.
+
+Para este ejercicios se crea dos beans debido a que Employee esta relacionado con Job por una llave foránea
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Cuando se acabe con los beans, se pasa a los Dao:
+
+Se va a la carpeta java -> New -> Package -> poner nombre "daos"
+
+SE CREA UNA CLASE DaoBase la cual sirve para que no tener que repetir las credenciales de tu base de datos en cada archivo.
+
+DaoBase:
+package daos;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public abstract class DaoBase {
+    public Connection getConnection() throws SQLException {
+        try {
+            // Carga el driver de MySQL que pusimos en el pom.xml
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        // Cambia "root" y "tu_contraseña" por tus datos locales de MySQL y también nombre de la base de datos
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/hr_lab", "root", "root");
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+- Los Beans se crean para cualquier tabla de la que necesites transportar o estructurar datos.
+
+- Los DAOs se crean solo para las entidades de negocio principales que van a tener procesos de 
+  guardado, edición o eliminación en la aplicación web, o que sirven para alimentar flujos obligatorios 
+  (como DaoJobs).
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Controlador (Servlet): 
+java -> New -> Package -> poner nombre "controllers"
+De ahi se crean los archivos Servlet, "NombreServlet"
+
+
+Primero entrar a Maven, de ahi dar click en el proyecto -> Lifecycle -> package , de ahi empzara a cargar y se generará
+el archivo .war en target, buscar el archivo y copiarlo en la carpeta donde se tiene el tomcat en webapps, de ahi salir a bin
+y darle click a startup.bat y luego buscar en google http://localhost:8080/nombre_del_archivo.war/home
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+Para subir al github, se debe de crear de una vez el repositorio y en el explorador de archivos en donde este el archivo
+pom.xml, dar click y abrir el git bash
+
+Codigo para subir al github:
+git init
+echo "target/" >> .gitignore
+git add .
+git commit -m "Primer commit - Laboratorio terminado"
+git branch -M main
+git remote add origin https://github.com/Alvaro210413/LAB6-IWEB.git
+git push -u origin main
+
