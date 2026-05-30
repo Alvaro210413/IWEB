@@ -73,7 +73,7 @@ Codigo para subir al github:
 git init
 echo "target/" >> .gitignore
 git add .
-git commit -m "Primer commit - Laboratorio terminado"
+git commit -m "Laboratorio 6"
 git branch -M main
 git remote add origin https://github.com/Alvaro210413/LAB6-IWEB.git
 git push -u origin main
