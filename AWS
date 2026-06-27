@@ -1,0 +1,112 @@
+¡Excelente elección! Utilizar una instancia EC2 es la forma ideal de desplegar este proyecto, ya que tienes una arquitectura completa con tres partes: un frontend (Vite + Tailwind), 
+un backend (Java/Tomcat) y una base de datos (MySQL).
+
+Dado que tienes múltiples componentes en el mismo repositorio, la forma más limpia, escalable y profesional de hacerlo en una sola máquina EC2 es utilizando Docker y Docker Compose. 
+De esta manera, no tendrás que instalar Java, Tomcat, Node y MySQL manualmente en el servidor, evitando conflictos de versiones.
+
+Aquí tienes la guía paso a paso de cómo estructurarlo y desplegarlo en AWS EC2:
+
+Paso 1: Configurar la Instancia EC2 en AWS
+- Ve a la consola de AWS y entra a EC2.
+- Haz clic en Launch Instance (Lanzar instancia).
+- Nombre: Ponle algo como inventario-quinta-ola-server.
+- Sistema Operativo: Elige Ubuntu (la versión LTS más reciente, suele ser la más fácil para trabajar).
+
+Tipo de instancia: Para este proyecto (Java + MySQL consume algo de memoria), te recomiendo al menos una t3.medium o t2.medium (4GB de RAM). Si usas la capa gratuita (t2.micro de 1GB), es muy probable que se quede sin memoria al compilar Java o correr MySQL.
+
+Key pair (Par de claves): Crea una nueva clave .pem y descárgala. La usarás para conectarte por terminal.
+
+- Network settings (Seguridad): Asegúrate de marcar:
+    Allow SSH traffic from (Permitir tráfico SSH desde tu IP).
+    Allow HTTP traffic from the internet (Puerto 80).
+    Allow HTTPS traffic from the internet (Puerto 443).
+
+Haz clic en Launch Instance.
+
+Paso 2: Conectarte a tu EC2 y preparar el entorno
+Abre la terminal de tu computadora (o Git Bash en Windows), ve a la carpeta donde descargaste tu clave .pem y ejecuta:
+
+Bash
+# Dale permisos correctos a la clave (solo en Linux/Mac)
+chmod 400 tu-clave.pem
+
+# Conéctate a la IP pública de tu EC2 (la encuentras en la consola de AWS)
+ssh -i "tu-clave.pem" ubuntu@IP_PUBLICA_DE_TU_EC2
+Una vez dentro del servidor de Ubuntu, actualiza e instala Docker y Git:
+
+Bash
+sudo apt update && sudo apt upgrade -y
+sudo apt install git docker.io docker-compose -y
+
+# Habilitar que Docker corra sin necesidad de usar 'sudo' siempre
+sudo usermod -aG docker ubuntu
+# Cierra sesión y vuelve a entrar para aplicar los cambios de Docker:
+exit
+(Vuelve a conectarte con el comando ssh -i ...)
+
+Paso 3: Clonar tu repositorio en el EC2
+Como tu repositorio es Privado (según se ve en la captura), no podrás clonarlo directamente con git clone a menos que te autentiques.
+
+La forma más segura es generar una clave SSH en tu EC2:
+
+Bash
+ssh-keygen -t ed25519 -C "tu-email@example.com"
+# Presiona Enter a todo
+Muestra la clave generada en pantalla:
+
+Bash
+cat ~/.ssh/id_ed25519.pub
+Copia todo ese texto. Ve a tu cuenta de GitHub -> Settings -> SSH and GPG keys -> New SSH key, pégala allí y guárdala.
+
+Ahora ya puedes clonar tu repositorio de forma segura usando el enlace SSH:
+
+Bash
+git clone git@github.com:lucia-gil/inventario-quinta-ola.git
+cd inventario-quinta-ola
+Paso 4: Definir el despliegue con Docker Compose
+Para que todo funcione a la vez, lo ideal es crear un archivo llamado docker-compose.yml en la raíz del proyecto. Este archivo le dirá a la máquina EC2 cómo levantar tu base de datos, tu backend en Java y tu frontend.
+
+Puedes crearlo en tu EC2 ejecutando nano docker-compose.yml y definiendo una estructura similar a esta:
+
+YAML
+version: '3.8'
+
+services:
+  database:
+    image: mysql:8.0
+    container_name: inventario-db
+    environment:
+      MYSQL_ROOT_PASSWORD: tu_password_seguro
+      MYSQL_DATABASE: inventario
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d # Corre tus scripts iniciales automáticamente
+      - db_data:/var/lib/mysql
+
+  backend:
+    build: ./webapp  # Ajusta a la carpeta donde esté tu Dockerfile de Java/Tomcat
+    container_name: inventario-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  frontend:
+    build: ./webapp  # O la carpeta correspondiente a tu interfaz Vite + Tailwind
+    container_name: inventario-frontend
+    ports:
+      - "80:80"       # Expone el frontend en el puerto estándar web de la EC2
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
+(Nota: Para que esto funcione de forma completamente automática, requerirás añadir un archivo corto llamado Dockerfile dentro de tus carpetas de frontend y backend para especificar cómo se compilan o se sirven).
+
+Paso 5: ¡Lanzar la aplicación!
+Una vez configurado lo anterior, levantar todo tu sistema en AWS requiere un solo comando:
+
+Bash
+docker-compose up --build -y
+Este comando descargará MySQL, compilará tu aplicación de Java (Tomcat), compilará tu interfaz en Vite y pondrá todo en marcha. A partir de ese momento, cualquier persona podrá ingresar a la aplicación web escribiendo la IP Pública de tu EC2 directamente en el navegador.
